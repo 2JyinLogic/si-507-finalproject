@@ -1,115 +1,121 @@
 # Amazon Product Network Analysis
 
-A final project for **SI 507** showcasing graph-based analysis and interactive visualization of Amazon product data.
-
+A final project for **SI 507** exploring graph-based analysis and interactive visualization of real-world Amazon product data.
 
 ## Project Overview
 
-This project explores connections between Amazon products based on shared user interactions (e.g., common reviewers). Using a graph data structure, we analyze and visualize:
+This project builds a network of Amazon products based on shared user reviews. Each product is represented as a node, and an edge is formed between two products if the same user has reviewed both. The resulting product graph enables:
 
-- Product similarity and co-occurrence  
-- The most "popular" or highly connected products  
-- Shortest connection paths between two products  
-- Product statistics (rating, price, etc.)  
-- Interactive visualizations by category or full dataset  
+-  **Product similarity detection** based on user overlap  
+- **Shortest paths** between products via shared user activity  
+- **Identification of highly connected (popular) products**  
+- **Access to key product statistics** (rating, price, etc.)  
+- **Interactive graph visualizations** (full and filtered views)
 
 
-
-## File Structure
+## Project Structure
 
 ```
 finalproj/
-│
 ├── app.py                   # Flask app entry point
-├── build_graph.py           # Constructs graph from dataset
-├── load_and_clean.py        # Loads and preprocesses raw data
-├── recommend_core.py        # Core functions: recommend, stats, shortest path
+├── build_graph.py           # Graph construction logic
+├── load_and_clean.py        # Data loading and preprocessing
+├── recommend_core.py        # Recommendation & analysis utilities
 │
-├── templates/               # Jinja2 HTML templates
+├── templates/               
 │   ├── index.html
 │   ├── stats.html
 │   ├── recommend.html
 │   ├── shortest.html
+│   ├── popular.html
+│   ├── data_summary.html
 │   └── graph_view.html
 │
 ├── static/
-│   ├── graphs/              # Auto-generated Pyvis graph HTML
-│   └── style.css            # Optional custom CSS
+│   ├── graphs/              # Auto-generated Pyvis visualizations
+│   │   ├── full_network.html
+│   │   ├── shortest_path.html
+│   │   └── static_network.png
+│   └── style.css            # UI styles
 │
-└── amazon.csv               # Source data file
+└── data/
+    ├── Electronics.json           # User reviews
+    └── meta_Electronics.json      # Product metadata
 ```
 
 
 ## Setup Instructions
 
-1. **Clone the repo**
+### 1. Clone the repo
 
 ```bash
 git clone <your-repo-url>
 cd finalproj
 ```
 
-2. **Install required packages**
+### 2. Install dependencies
 
 ```bash
 pip install flask pandas networkx pyvis
 ```
 
-3. **Run the app**
+### 3. Run the application
 
 ```bash
 python app.py
 ```
 
+### 4. Open in your browser
 
-4. **Open in browser**
-
-Visit: [http://localhost:5000](http://localhost:5000)
-
-
-## Features
-
-| Function | Description |
-|----------|-------------|
-| `Check Product Stats` | Input a `product_id` to see its name, rating, price, and link |
-| `Recommend Similar Products` | Based on user overlap (graph neighbors) |
-| `Find Shortest Path` | Between two products (smallest co-review path) |
-| `Most Popular Product` | Node with highest degree |
-| `Graph Visualization` | Full graph or category-specific interactive network |
-| `Tooltip Info` | On hover: product name, rating, price |
-| `Highlighting` | Shortest path in red, most connected in orange |
-| `Edge Scaling` | Weight visualized with logarithmic thickness |
+Visit [http://localhost:5000](http://localhost:5000)
 
 
-## Data Description
+## Features & Functionality
 
-- **Source**: `amazon.csv`  
-- **Attributes used**:
-  - `product_id`
-  - `product_name`
-  - `discounted_price`
-  - `rating`
-  - `user_id` (for co-purchase edges)
-  - `category`
-  - `product_link`
-
-
-## Graph Details
-
-- Undirected graph built via shared users:
-  - Edge weight = number of users who interacted with both products
-- `NetworkX` used for backend graph structure
-- `Pyvis` used for interactive frontend rendering
+| Feature                        | Description                                                  |
+| ------------------------------ | ------------------------------------------------------------ |
+| **Check Product Stats**        | View product name, price, rating, category, and product link |
+| **Recommend Similar Products** | Based on co-reviewed products (graph neighbors)              |
+| **Find Shortest Path**         | Shows the connection path between two products               |
+| **Most Popular Product**       | Highlights the product with the highest degree (most co-reviewed) |
+| **Full Graph Visualization**   | Interactive Pyvis graph of up to 500 nodes                   |
+| **Hover Tooltips**             | Product name, rating, and price                              |
+| **Edge Scaling**               | Log-scaled edge thickness based on weight                    |
+| **Visual Highlights**          | Red = shortest path, Orange = most popular                   |
 
 
-## Visual Samples
+## Data Sources
 
-- `View Full Product Network`  
-  Displays entire dataset as a product co-review graph
+This project uses **two related datasets** from the [UCSD Amazon Product Dataset Repository](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/):
 
-- `View Category Network`  
-  Filter by top-level category to focus graph view
+- **`meta_Electronics.json`**:  
+  Product metadata (title, category, price, ratings, links)
 
-- `Visualize Shortest Path`  
-  Animates shortest connection between any two nodes
+- **`Electronics.json`**:  
+  User reviews with reviewer IDs and product ratings
 
+### Key Fields Used
+
+- `asin` / `product_id`
+- `title` / `product_name`
+- `price`
+- `category`
+- `overall` (rating)
+- `reviewerID` / `user_id`
+- `product_link`
+
+
+## Graph Construction
+
+- Each product is a **node**
+- Two products are connected by an **edge** if they were reviewed by the same user
+- **Edge weight** = number of users who reviewed both
+- Implemented using **NetworkX**
+- Visualized using **Pyvis** with Barnes-Hut layout physics for readability
+
+
+## Visual Demonstrations
+
+- **View Full Network**: Explore the entire graph of product connections  
+- **Shortest Path View**: See how one product is connected to another  
+- **Popular Product Highlight**: Find products with high degree centrality  
