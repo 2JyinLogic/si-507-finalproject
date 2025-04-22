@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Most Connected Product</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h2>Most Connected Product</h2>
+  <ul>
+    <li><strong>Name:</strong> {{ info.name }}</li>
+    <li><strong>ID:</strong> {{ pid }}</li>
+    <li><strong>Price:</strong> {{ info.price }}</li>
+    <li><strong>Connections:</strong> {{ degree }}</li>
+    <li><a href="{{ info.link }}" target="_blank">View on Amazon</a></li>
+  </ul>
+  <a href="/">Back</a>
+</body>
+</html>

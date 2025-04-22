@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon Product Network</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Amazon Product Network Interface</h1>
+    <p>
+      <em
+        >This interface explores connections between Amazon products based on
+        shared customer reviews. All nodes represent products.</em
+      >
+    </p>
+
+    <h2>Try with Example Product IDs</h2>
+    <ul>
+      <li>
+        <a
+          href="#"
+          onclick="fillField('product1', '0594451647'); fillField('product2', '140053271X')"
+        >
+          Try Shortest Path: <code>0594451647</code> ➝ <code>140053271X</code>
+        </a>
+      </li>
+    </ul>
+
+    <script>
+      function fillField(fieldName, value) {
+        const el = document.querySelector(`[name="${fieldName}"]`);
+        if (el) el.value = value;
+      }
+    </script>
+
+    <h2>Check Product Stats</h2>
+    <form action="/stats" method="post">
+      Product ID: <input type="text" name="product_id" required />
+      <input type="submit" value="Check Stats" />
+    </form>
+
+    <h2>Recommend Similar Products</h2>
+    <form action="/recommend" method="post">
+      Product ID: <input type="text" name="product_id" required />
+      <input type="submit" value="Recommend" />
+    </form>
+
+    <h2>Find Shortest Path Between Two Products</h2>
+    <form action="/shortest" method="post">
+      Product 1 ID: <input type="text" name="product1" required /><br /><br />
+      Product 2 ID: <input type="text" name="product2" required />
+      <input type="submit" value="Find Path" />
+    </form>
+
+    <h2>View Products Commonly Reviewed Together</h2>
+    <form action="/connected" method="post">
+      <label>Product ID:</label>
+      <input type="text" name="product_id" required />
+      <input type="submit" value="View Connected Products" />
+    </form>
+
+    <h2>Find Most Popular Product</h2>
+    <form action="/popular" method="get">
+      <input type="submit" value="Show Most Connected Product" />
+    </form>
+
+    <h2>Graph Visualization</h2>
+    <form action="/visual/network" method="get">
+      <input type="submit" value="View Full Product Network" />
+    </form>
+
+    <form action="/visual/path" method="post">
+      Product 1 ID: <input type="text" name="product1" required /><br /><br />
+      Product 2 ID: <input type="text" name="product2" required />
+      <input type="submit" value="Visualize Shortest Path" />
+    </form>
+  </body>
+</html>

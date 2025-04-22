@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shortest Path</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h2>Shortest Path from {{ p1 }} to {{ p2 }}</h2>
+    <ul>
+      {% for pid, name in path %}
+      <li>
+        <strong>{{ pid }}</strong><br />
+        {{ name }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <a href="/">Back</a>
+  </body>
+</html>

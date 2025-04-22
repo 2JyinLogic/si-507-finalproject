@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Summary</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Top Rated Products</h1>
+  <ul>
+    {% for item in top_products %}
+      <li><strong>{{ item['name'] }}</strong> (Rating: {{ item['rating'] }}, ID: {{ item['product_id'] }})</li>
+    {% endfor %}
+  </ul>
+
+  <h1>Category Distribution</h1>
+  <ul>
+    {% for category, count in category_counts.items() %}
+      <li>{{ category }}: {{ count }} products</li>
+    {% endfor %}
+  </ul>
+
+  <br><a href="/">Back to Home</a>
+</body>
+</html>

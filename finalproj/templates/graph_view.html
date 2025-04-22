@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Product Graph</title>
+    <style>
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Interactive Product Graph</h2>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% else %}
+        <iframe src="{{ url_for('static', filename=graph_file) }}"></iframe>
+    {% endif %}
+
+    <br><a href="/">← Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Connected Products</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Explore Connected Products</h1>
+
+  <form method="POST">
+    <label for="product_id">Enter a Product ID:</label>
+    <input type="text" id="product_id" name="product_id" required>
+    <button type="submit">Show Connected</button>
+  </form>
+
+  {% if base_pid %}
+    <h2>Directly Connected Products for: <code>{{ base_pid }}</code></h2>
+
+    {% if error %}
+      <p style="color: red;">{{ error }}</p>
+    {% elif neighbors %}
+      <p>These products are directly connected (e.g., co-reviewed by the same users):</p>
+      <ul>
+        {% for n in neighbors %}
+          <li>
+            <b>{{ n.id }}</b>: {{ n.name }}
+            <a href="/stats?product_id={{ n.id }}" target="_blank" style="margin-left: 10px;">
+              🔎 View Details
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No directly connected products found for this ID.</p>
+    {% endif %}
+  {% endif %}
+
+  <br>
+  <a href="/">← Back to Home</a>
+</body>
+</html>

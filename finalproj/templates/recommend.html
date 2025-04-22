@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recommendations</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h2>Recommendations for Product ID: {{ base_pid }}</h2>
+    <ul>
+      {% for name, pid, weight in products %}
+      <li>
+        <strong>{{ pid }}</strong> — {{ name }} | Similarity: {{ weight }}
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="/">Go Back</a>
+  </body>
+</html>

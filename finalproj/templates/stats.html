@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product Stats</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h2>Product ID: {{ pid }}</h2>
+    <ul>
+      <p><strong>Name:</strong> {{ info['name'] }}</p>
+      <p><strong>Rating:</strong> {{ info.get('rating', 'N/A') }}</p>
+      <p><strong>Price:</strong> {{ info.get('price', 'N/A') }}</p>
+      <p>
+        <strong>Link:</strong>
+        {% if info.get('link') %}
+        <a href="{{ info['link'] }}" target="_blank">View Product</a>
+        {% else %} Not Available {% endif %}
+      </p>
+    </ul>
+    <a href="/">Go Back</a>
+  </body>
+</html>
